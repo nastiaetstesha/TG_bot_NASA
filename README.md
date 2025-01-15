@@ -6,7 +6,7 @@
 ## Установка
 1. **Клонируйте репозиторий или загрузите файлы.**
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/nastiaetstesha/TG_bot_NASA.git
    cd TG
    ```
 
