@@ -7,7 +7,7 @@
 1. **Клонируйте репозиторий или загрузите файлы.**
    ```bash
    git clone https://github.com/nastiaetstesha/TG_bot_NASA.git
-   cd TG
+   cd /path/to/project
    ```
 
 2. **Создайте виртуальное окружение и активируйте его.**
