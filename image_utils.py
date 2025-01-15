@@ -1,6 +1,8 @@
 import os
 import requests
 
+from urllib.parse import urlsplit
+
 
 def get_file_extension(url):
 

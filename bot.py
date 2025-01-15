@@ -3,10 +3,16 @@ from dotenv import load_dotenv
 from telegram.bot import Bot
 
 
-def publish_to_telegram_channel(token, channel_id, text):
+def publish_to_telegram_channel(token, channel_id, text=None, image_path=None):
 
     bot = Bot(token=token)
-    bot.send_message(chat_id=channel_id, text=text)
+    if text:
+        bot.send_message(chat_id=channel_id, text=text)
+
+    if image_path:
+        with open(image_path, 'rb') as image:
+            bot.send_photo(chat_id=channel_id, photo=image)
+
 
 
 if __name__ == "__main__":
@@ -18,11 +24,11 @@ if __name__ == "__main__":
     if not token or not channel_id:
         raise ValueError("TG_ACCESS_TOKEN или TG_CHANNEL_ID не указаны в .env файле")
 
-    # Текст для публикации
     message_text = "Hello"
+    image_path = "/Users/egorsemin/Practice/TG/nasa_images/nasa_apod1.jpg"
 
     try:
-        publish_to_telegram_channel(token, channel_id, message_text)
+        publish_to_telegram_channel(token, channel_id, text=message_text, image_path=image_path)
         print("Сообщение успешно отправлено в канал!")
     except Exception as e:
         print(f"Ошибка отправки сообщения: {e}")

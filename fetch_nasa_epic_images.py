@@ -1,20 +1,9 @@
 import os
 import requests
 import argparse
+
 from dotenv import load_dotenv
 from image_utils import download_image, get_file_extension
-
-
-def download_image(url, save_path):
-
-    response = requests.get(url, stream=True)
-    response.raise_for_status()
-
-    os.makedirs(os.path.dirname(save_path), exist_ok=True)
-
-    with open(save_path, 'wb') as file:
-        for chunk in response.iter_content(chunk_size=8192):
-            file.write(chunk)
 
 
 def fetch_epic_images_data(api_key):

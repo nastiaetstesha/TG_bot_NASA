@@ -1,6 +1,7 @@
 import os
 import requests
 import argparse
+
 from dotenv import load_dotenv
 from urllib.parse import urlsplit, unquote
 from image_utils import download_image, get_file_extension
