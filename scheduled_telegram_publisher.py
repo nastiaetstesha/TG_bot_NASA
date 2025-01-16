@@ -64,5 +64,3 @@ if __name__ == "__main__":
         publish_images_periodically(token, channel_id, args.directories, args.delay)
     except KeyboardInterrupt:
         raise KeyboardInterrupt("Остановка публикации.")
-    except Exception as e:
-        print(f"Ошибка: {e}")

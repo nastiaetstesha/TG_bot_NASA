@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from telegram.bot import Bot
+from telegram.error import TelegramError
 
 
 def publish_to_telegram_channel(token, channel_id, text=None, image_path=None):
@@ -25,10 +26,10 @@ if __name__ == "__main__":
         raise ValueError("TG_ACCESS_TOKEN или TG_CHANNEL_ID не указаны в .env файле")
 
     message_text = "Hello"
-    image_path = "/Users/egorsemin/Practice/TG/nasa_images/nasa_apod1.jpg"
+    image_path = "nasa_images/nasa_apod1.jpg"
 
     try:
         publish_to_telegram_channel(token, channel_id, text=message_text, image_path=image_path)
         print("Сообщение успешно отправлено в канал!")
-    except Exception as e:
-        print(f"Ошибка отправки сообщения: {e}")
+    except TelegramError as e:
+        print(f"Ошибка отправки сообщения в Telegram: {e}")

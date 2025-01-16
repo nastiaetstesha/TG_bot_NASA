@@ -54,5 +54,12 @@ if __name__ == "__main__":
             raise ValueError("API-ключ NASA не найден. Убедитесь, что он указан в файле .env.")
 
         fetch_and_save_apod_images(nasa_api_key, args.save_directory, args.count)
-    except Exception as e:
-        print(f"Ошибка: {e}")
+
+    except FileNotFoundError as e:
+        print(f"Ошибка: Директория не найдена — {e}")
+
+    except ValueError as e:
+        print(f"Ошибка: Некорректное значение — {e}")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Ошибка при запросе к API NASA: {e}")
