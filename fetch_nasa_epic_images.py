@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from image_utils import download_image, get_file_extension
 
 
-def fetch_epic_images_data(api_key):
+def get_epic_image_metadata(api_key):
 
     url = "https://api.nasa.gov/EPIC/api/natural/images"
     params = {
@@ -55,7 +55,7 @@ if __name__ == "__main__":
         if not nasa_api_key:
             raise ValueError("API-ключ NASA не найден. Убедитесь, что он указан в файле .env.")
 
-        images = fetch_epic_images_data(nasa_api_key)
+        images = get_epic_image_metadata(nasa_api_key)
         if len(images) < args.count:
             raise ValueError(f"Запрошено {args.count} снимков, но доступно только {len(images)}.")
 

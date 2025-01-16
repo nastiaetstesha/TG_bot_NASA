@@ -7,7 +7,7 @@ from urllib.parse import urlsplit, unquote
 from image_utils import download_image, get_file_extension
 
 
-def fetch_spacex_images_data(launch_id=None):
+def get_spacex_image_urls(launch_id=None):
     base_url = "https://api.spacexdata.com/v5/launches/"
     url = f"{base_url}{launch_id}" if launch_id else f"{base_url}latest"
 
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        images = fetch_spacex_images_data(launch_id=args.launch_id)
+        images = get_spacex_image_urls(launch_id=args.launch_id)
 
         save_spacex_images(images, save_directory=args.save_directory, launch_id=args.launch_id)
 
