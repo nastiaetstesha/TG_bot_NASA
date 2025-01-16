@@ -41,15 +41,6 @@ def save_epic_images(images, api_key, save_directory):
         download_image(image_url, save_path)
 
 
-def fetch_and_save_epic_images(api_key, save_directory, count=5):
-
-    images = fetch_epic_images_data(api_key)
-    if len(images) < count:
-        raise ValueError(f"Запрошено {count} снимков, но доступно только {len(images)}.")
-
-    save_epic_images(images[:count], api_key, save_directory)
-
-
 if __name__ == "__main__":
     load_dotenv()
 
@@ -64,7 +55,11 @@ if __name__ == "__main__":
         if not nasa_api_key:
             raise ValueError("API-ключ NASA не найден. Убедитесь, что он указан в файле .env.")
 
-        fetch_and_save_epic_images(nasa_api_key, args.save_directory, args.count)
+        images = fetch_epic_images_data(nasa_api_key)
+        if len(images) < args.count:
+            raise ValueError(f"Запрошено {args.count} снимков, но доступно только {len(images)}.")
+
+        save_epic_images(images[:args.count], nasa_api_key, args.save_directory)
 
     except FileNotFoundError as e:
         print(f"Ошибка: Указанная директория не найдена — {e}")

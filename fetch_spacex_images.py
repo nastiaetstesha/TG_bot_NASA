@@ -30,11 +30,6 @@ def save_spacex_images(images, save_directory, launch_id=None):
         download_image(image_url, save_path)
 
 
-def fetch_and_save_spacex_images(launch_id=None, save_directory="images"):
-    images = fetch_spacex_images_data(launch_id)
-    save_spacex_images(images, save_directory, launch_id)
-
-
 if __name__ == "__main__":
     load_dotenv()
 
@@ -45,13 +40,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        fetch_and_save_spacex_images(launch_id=args.launch_id, save_directory=args.save_directory)
+        images = fetch_spacex_images_data(launch_id=args.launch_id)
+
+        save_spacex_images(images, save_directory=args.save_directory, launch_id=args.launch_id)
 
     except FileNotFoundError as e:
         print(f"Ошибка: Директория не найдена — {e}")
 
     except ValueError as e:
-        print(f"Ошибка: Некорректное значение — {e}")
+        print(f"Ошибка: {e}")
 
     except requests.exceptions.RequestException as e:
         print(f"Ошибка при запросе к API SpaceX: {e}")

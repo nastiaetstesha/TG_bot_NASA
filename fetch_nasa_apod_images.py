@@ -33,12 +33,6 @@ def save_apod_images(images, save_directory):
         download_image(image_url, save_path)
 
 
-def fetch_and_save_apod_images(api_key, save_directory, count=1):
-
-    images = fetch_apod_images_data(api_key, count)
-    save_apod_images(images, save_directory)
-
-
 if __name__ == "__main__":
     load_dotenv()
 
@@ -53,7 +47,8 @@ if __name__ == "__main__":
         if not nasa_api_key:
             raise ValueError("API-ключ NASA не найден. Убедитесь, что он указан в файле .env.")
 
-        fetch_and_save_apod_images(nasa_api_key, args.save_directory, args.count)
+        images = fetch_apod_images_data(nasa_api_key, args.count)
+        save_apod_images(images, args.save_directory)
 
     except FileNotFoundError as e:
         print(f"Ошибка: Директория не найдена — {e}")
