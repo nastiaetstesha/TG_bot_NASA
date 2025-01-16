@@ -4,6 +4,7 @@ import argparse
 
 from dotenv import load_dotenv
 from image_utils import download_image, get_file_extension
+from urllib.parse import urlencode
 
 
 def get_epic_image_metadata(api_key):
@@ -20,7 +21,6 @@ def get_epic_image_metadata(api_key):
 
 
 def generate_epic_image_url(api_key, image_info):
-
     base_url = "https://api.nasa.gov/EPIC/archive/natural"
 
     date = image_info['date'].split(' ')[0]
@@ -28,7 +28,12 @@ def generate_epic_image_url(api_key, image_info):
 
     image_name = image_info['image']
 
-    return f"{base_url}/{year}/{month}/{day}/png/{image_name}.png?api_key={api_key}"
+    params = {
+        'api_key': api_key
+    }
+
+    encoded_params = urlencode(params)
+    return f"{base_url}/{year}/{month}/{day}/png/{image_name}.png?{encoded_params}"
 
 
 def save_epic_images(images, api_key, save_directory):

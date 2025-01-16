@@ -7,9 +7,9 @@ from urllib.parse import urlsplit, unquote
 from image_utils import download_image, get_file_extension
 
 
-def get_spacex_image_urls(launch_id=None):
+def get_spacex_image_urls(launch_id="latest"):
     base_url = "https://api.spacexdata.com/v5/launches/"
-    url = f"{base_url}{launch_id}" if launch_id else f"{base_url}latest"
+    url = f"{base_url}{launch_id}"
 
     response = requests.get(url)
     response.raise_for_status()
