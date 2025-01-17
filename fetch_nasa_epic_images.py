@@ -32,8 +32,13 @@ def generate_epic_image_url(api_key, image_info):
         'api_key': api_key
     }
 
-    encoded_params = urlencode(params)
-    return f"{base_url}/{year}/{month}/{day}/png/{image_name}.png?{encoded_params}"
+    url = requests.Request(
+        "GET",
+        f"{base_url}/{year}/{month}/{day}/png/{image_name}.png",
+        params=params
+    ).prepare().url
+
+    return url
 
 
 def save_epic_images(images, api_key, save_directory):
@@ -66,11 +71,5 @@ if __name__ == "__main__":
 
         save_epic_images(images[:args.count], nasa_api_key, args.save_directory)
 
-    except FileNotFoundError as e:
-        print(f"Ошибка: Указанная директория не найдена — {e}")
-
-    except ValueError as e:
-        print(f"Ошибка: Некорректное значение — {e}")
-
-    except requests.exceptions.RequestException as e:
-        print(f"Ошибка при запросе к API NASA: {e}")
+    except Exception:
+        raise

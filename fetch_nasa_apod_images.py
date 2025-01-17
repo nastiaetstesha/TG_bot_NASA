@@ -50,11 +50,5 @@ if __name__ == "__main__":
         images = get_apod_image_urls(nasa_api_key, args.count)
         save_apod_images(images, args.save_directory)
 
-    except FileNotFoundError as e:
-        print(f"Ошибка: Директория не найдена — {e}")
-
-    except ValueError as e:
-        print(f"Ошибка: Некорректное значение — {e}")
-
-    except requests.exceptions.RequestException as e:
-        print(f"Ошибка при запросе к API NASA: {e}")
+    except Exception:
+        raise

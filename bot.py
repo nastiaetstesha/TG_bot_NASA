@@ -31,5 +31,6 @@ if __name__ == "__main__":
     try:
         publish_to_telegram_channel(token, channel_id, text=message_text, image_path=image_path)
         print("Сообщение успешно отправлено в канал!")
-    except TelegramError as e:
-        print(f"Ошибка отправки сообщения в Telegram: {e}")
+        
+    except Exception:
+        raise

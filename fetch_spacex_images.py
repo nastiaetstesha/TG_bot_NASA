@@ -44,11 +44,5 @@ if __name__ == "__main__":
 
         save_spacex_images(images, save_directory=args.save_directory, launch_id=args.launch_id)
 
-    except FileNotFoundError as e:
-        print(f"Ошибка: Директория не найдена — {e}")
-
-    except ValueError as e:
-        print(f"Ошибка: {e}")
-
-    except requests.exceptions.RequestException as e:
-        print(f"Ошибка при запросе к API SpaceX: {e}")
+    except Exception:
+        raise
