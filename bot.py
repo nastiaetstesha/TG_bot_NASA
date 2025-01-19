@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 from telegram.bot import Bot
-from telegram.error import TelegramError
 
 
 def publish_to_telegram_channel(token, channel_id, text=None, image_path=None):
@@ -28,9 +27,5 @@ if __name__ == "__main__":
     message_text = "Hello"
     image_path = "nasa_images/nasa_apod1.jpg"
 
-    try:
-        publish_to_telegram_channel(token, channel_id, text=message_text, image_path=image_path)
-        print("Сообщение успешно отправлено в канал!")
-        
-    except Exception:
-        raise
+    publish_to_telegram_channel(token, channel_id, text=message_text, image_path=image_path)
+    print("Сообщение успешно отправлено в канал!")

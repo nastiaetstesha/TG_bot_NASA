@@ -1,6 +1,7 @@
 import os
 import requests
 
+from dotenv import load_dotenv
 from urllib.parse import urlsplit
 
 
@@ -11,7 +12,15 @@ def get_file_extension(url):
 
 
 def download_image(url, save_path):
-    response = requests.get(url, stream=True)
+    load_dotenv()
+    api_key = os.getenv("NASA_API_KEY")
+    if not api_key:
+        raise ValueError("API-ключ NASA не найден. Убедитесь, что он указан в файле .env.")
+
+    params = {
+        'api_key': api_key
+    }
+    response = requests.get(url, params=params, stream=True)
     response.raise_for_status()
 
     os.makedirs(os.path.dirname(save_path), exist_ok=True)

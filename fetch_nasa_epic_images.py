@@ -4,7 +4,6 @@ import argparse
 
 from dotenv import load_dotenv
 from image_utils import download_image, get_file_extension
-from urllib.parse import urlencode
 
 
 def get_epic_image_metadata(api_key):
@@ -20,7 +19,7 @@ def get_epic_image_metadata(api_key):
     return response.json()
 
 
-def generate_epic_image_url(api_key, image_info):
+def generate_epic_image_url(image_info):
     base_url = "https://api.nasa.gov/EPIC/archive/natural"
 
     date = image_info['date'].split(' ')[0]
@@ -28,23 +27,13 @@ def generate_epic_image_url(api_key, image_info):
 
     image_name = image_info['image']
 
-    params = {
-        'api_key': api_key
-    }
-
-    url = requests.Request(
-        "GET",
-        f"{base_url}/{year}/{month}/{day}/png/{image_name}.png",
-        params=params
-    ).prepare().url
-
-    return url
+    return f"{base_url}/{year}/{month}/{day}/png/{image_name}.png"
 
 
-def save_epic_images(images, api_key, save_directory):
+def save_epic_images(images, save_directory):
 
     for index, image_info in enumerate(images, start=1):
-        image_url = generate_epic_image_url(api_key, image_info)
+        image_url = generate_epic_image_url(image_info)
         extension = get_file_extension(image_url)
         file_name = f"nasa_epic_{index}{extension}"
         save_path = os.path.join(save_directory, file_name)
@@ -69,7 +58,7 @@ if __name__ == "__main__":
         if len(images) < args.count:
             raise ValueError(f"Запрошено {args.count} снимков, но доступно только {len(images)}.")
 
-        save_epic_images(images[:args.count], nasa_api_key, args.save_directory)
+        save_epic_images(images[:args.count], args.save_directory)
 
-    except Exception:
-        raise
+    except FileNotFoundError as e:
+        print(f"Ошибка: Директория не найдена — {e}")

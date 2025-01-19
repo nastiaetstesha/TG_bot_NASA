@@ -44,5 +44,5 @@ if __name__ == "__main__":
 
         save_spacex_images(images, save_directory=args.save_directory, launch_id=args.launch_id)
 
-    except Exception:
-        raise
+    except FileNotFoundError as e:
+        print(f"Ошибка: Директория не найдена — {e}")

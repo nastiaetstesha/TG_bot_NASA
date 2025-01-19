@@ -3,7 +3,7 @@ import requests
 import argparse
 
 from dotenv import load_dotenv
-from image_utils import download_image, get_file_extension
+from image_utils import download_image
 
 
 def get_apod_image_urls(api_key, count=1):
@@ -50,5 +50,6 @@ if __name__ == "__main__":
         images = get_apod_image_urls(nasa_api_key, args.count)
         save_apod_images(images, args.save_directory)
 
-    except Exception:
-        raise
+    except FileNotFoundError as e:
+        print(f"Ошибка: Директория не найдена — {e}")
+

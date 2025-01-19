@@ -35,8 +35,8 @@ def publish_images_periodically(token, channel_id, directories, delay):
             try:
                 publish_to_telegram_channel(token, channel_id, image_path)
                 print(f"Изображение отправлено: {image_path}")
-            except Exception as e:
-                print(f"Ошибка при отправке изображения {image_path}: {e}")
+            except FileNotFoundError:
+                print(f"Файл не найден: {image_path}. Пропускаем.")
 
             time.sleep(delay)
 
