@@ -49,15 +49,15 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    nasa_api_key = os.getenv("NASA_API_KEY")
+    if not nasa_api_key:
+        raise ValueError("API-ключ NASA не найден. Убедитесь, что он указан в файле .env.")
+
+    images = get_epic_image_metadata(nasa_api_key)
+    if len(images) < args.count:
+        raise ValueError(f"Запрошено {args.count} снимков, но доступно только {len(images)}.")
+
     try:
-        nasa_api_key = os.getenv("NASA_API_KEY")
-        if not nasa_api_key:
-            raise ValueError("API-ключ NASA не найден. Убедитесь, что он указан в файле .env.")
-
-        images = get_epic_image_metadata(nasa_api_key)
-        if len(images) < args.count:
-            raise ValueError(f"Запрошено {args.count} снимков, но доступно только {len(images)}.")
-
         save_epic_images(images[:args.count], args.save_directory)
 
     except FileNotFoundError as e:

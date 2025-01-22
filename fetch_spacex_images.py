@@ -38,10 +38,9 @@ if __name__ == "__main__":
     parser.add_argument("--save_directory", type=str, help="Папка для сохранения фотографий.", default="images")
 
     args = parser.parse_args()
+    images = get_spacex_image_urls(launch_id=args.launch_id)
 
     try:
-        images = get_spacex_image_urls(launch_id=args.launch_id)
-
         save_spacex_images(images, save_directory=args.save_directory, launch_id=args.launch_id)
 
     except FileNotFoundError as e:

@@ -41,15 +41,14 @@ if __name__ == "__main__":
     parser.add_argument("--count", type=int, help="Количество изображений для скачивания.", default=1)
 
     args = parser.parse_args()
+    nasa_api_key = os.getenv("NASA_API_KEY")
+    if not nasa_api_key:
+        raise ValueError("API-ключ NASA не найден. Убедитесь, что он указан в файле .env.")
+
+    images = get_apod_image_urls(nasa_api_key, args.count)
 
     try:
-        nasa_api_key = os.getenv("NASA_API_KEY")
-        if not nasa_api_key:
-            raise ValueError("API-ключ NASA не найден. Убедитесь, что он указан в файле .env.")
-
-        images = get_apod_image_urls(nasa_api_key, args.count)
         save_apod_images(images, args.save_directory)
 
     except FileNotFoundError as e:
         print(f"Ошибка: Директория не найдена — {e}")
-
